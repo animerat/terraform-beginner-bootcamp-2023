@@ -72,11 +72,11 @@ https://en.wikipedia.org/wiki/Shebang_(Unix)
 
 When executing the bash script we can use the `./` shorthand notiation to execute the bash script.
 
-eg. `./bin/install_terraform_cli`
+eg. `./bin/install_terraform_cli.sh`
 
 If we are using a script in .gitpod.yml  we need to point the script to a program to interpert it.
 
-eg. `source ./bin/install_terraform_cli`
+eg. `source ./bin/install_terraform_cli.sh`
 
 #### Linux Permissions Considerations
 
@@ -150,3 +150,28 @@ gp env HELLO='world'
 All future workspaces launched will set the env vars for all bash terminals opened in thoes workspaces.
 
 You can also set en vars in the `.gitpod.yml` but this can only contain non-senstive env vars.
+
+### AWS CLI Installation
+
+AWS CLI is installed for the project via the bash script [`./bin/install_aws_cli.sh`](./bin/install_aws_cli.sh)
+
+
+[Getting Started Install (AWS CLI)](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+[AWS CLI Env Vars](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)
+
+We can check if our AWS credentials is configured correctly by running the following AWS CLI command:
+```sh
+aws sts get-caller-identity
+```
+
+If it is succesful you should see a json payload return that looks like this:
+
+```json
+{
+    "UserId": "AIEAVUO15ZPVEXAMPLE",
+    "Account": "012345678901",
+    "Arn": "arn:aws:iam::012345678901:user/terraform-beginner-bootcamp"
+}
+```
+
+We'll need to generate AWS CLI credits from IAM User in order to the user AWS CLI.
