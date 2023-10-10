@@ -5,13 +5,13 @@ terraform {
       version = "1.0.0"
     }
   }
-#cloud {
-#    organization = "anime-terraform"
-#
-#    workspaces {
-#      name = "terra-house-anime"
-#    }
-#  }
+cloud {
+    organization = "anime-terraform"
+
+    workspaces {
+      name = "terra-house-anime"
+    }
+  }
 }
 
 provider "terratowns" {
@@ -19,13 +19,11 @@ provider "terratowns" {
   user_uuid = var.teacherseat_user_uuid
   token = var.terratowns_access_token
 }
-module "terrahouse_aws" {
-  source = "./modules/terrahouse_aws"
+module "home_helloworld_hosting" {
+  source = "./modules/terrahome_aws"
   user_uuid = var.teacherseat_user_uuid
-  index_html_filepath = var.index_html_filepath
-  error_html_filepath = var.error_html_filepath
-  assets_path = var.assets_path
-  content_version = var.content_version
+  public_path = var.helloworld.public_path
+  content_version = var.helloworld.content_version
 }
 
 resource "terratowns_home" "helloeworld_home" {
@@ -33,8 +31,30 @@ resource "terratowns_home" "helloeworld_home" {
   description = <<DESCRIPTION
 Saying Hello World in Gaming
 DESCRIPTION
-  domain_name = module.terrahouse_aws.cloudfront_url
+  domain_name = module.home_helloworld_hosting.domain_name
   #domain_name = "5gtanba2k.cloudfront.net"
   town = "missingo"
-  content_version = 1
+  content_version = var.helloworld.content_version
+}
+
+module "home_okonomiyaki_hosting" {
+  source = "./modules/terrahome_aws"
+  user_uuid = var.teacherseat_user_uuid
+  public_path = var.okonomiyaki.public_path
+  content_version = var.okonomiyaki.content_version
+}
+
+resource "terratowns_home" "home_okonomiyaki" {
+  name = "Different types of Okonomiyaki"
+  description = <<DESCRIPTION
+Since we are talking about making an anything go house, how about an Okonomiyaki.
+The word "okonomiyaki" is derived from "okonomi" meaning "as you like" and "yaki" 
+meaning "grilled.  It's commonly referred to as being a Japanese pancake. Accurate 
+to its name, okonomiyaki can be served with a variety of toppings which include 
+everything from meat and seafood to vegetables and cheese.
+DESCRIPTION
+  domain_name = module.home_okonomiyaki_hosting.domain_name
+  #domain_name = "5gtanba2k.cloudfront.net"
+  town = "missingo"
+  content_version = var.okonomiyaki.content_version
 }
