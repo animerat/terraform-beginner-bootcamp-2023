@@ -28,3 +28,14 @@ provider "terratowns" {
 #  assets_path = var.assets_path
 #  content_version = var.content_version
 #}
+
+resource "terratowns_home" "helloeworld_home" {
+  name = "Hello World!"
+  description = <<DESCRIPTION
+Saying Hello World in Gaming
+DESCRIPTION
+  #domain_name = module.terrahouse_aws.cloudfront_url
+  domain_name = "5gtanba2k.cloudfront.net"
+  town = "gamers-grotto"
+  content_version = 1
+}
